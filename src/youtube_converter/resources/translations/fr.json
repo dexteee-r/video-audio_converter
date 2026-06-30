@@ -1,0 +1,105 @@
+{
+  "app_title": "Video Converter",
+  "app_subtitle": "YouTube, TikTok, Instagram, Vimeo, Twitch et 1000+ sites",
+
+  "ui": {
+    "queue_nav": "File d'attente",
+    "history_nav": "Historique",
+    "config_title": "Configuration",
+    "format_video": "Vidéo",
+    "format_audio": "Audio",
+    "language_label": "Langue :",
+    "theme_label": "Thème :",
+    "video_format_label": "Format vidéo :",
+    "compression_label": "Compression :",
+    "profile_label": "Profil :",
+    "url_label": "URL de la vidéo :",
+    "url_placeholder": "Collez l'URL ici (YouTube, TikTok, Instagram, etc.)",
+    "folder_label": "Dossier de destination :",
+    "browse_button": "Parcourir...",
+    "video_quality_label": "Qualité vidéo :",
+    "audio_format_label": "Format audio :",
+    "bitrate_label": "Bitrate :",
+    "kbps": "kbps",
+    "filename_template_label": "Nom de fichier :",
+    "add_mp4": "Ajouter MP4",
+    "add_audio": "Ajouter Audio",
+    "start": "Démarrer",
+    "stop": "Arrêter",
+    "queue_title": "File d'attente ({count})",
+    "clear_queue": "Vider",
+    "progress_label": "Progression :",
+    "open_folder": "Ouvrir le dossier",
+    "play_file": "Lire le fichier",
+    "status_label": "Statut :",
+    "history_show": "Historique (afficher)",
+    "history_hide": "Historique (masquer)",
+    "export_csv": "Exporter CSV",
+    "clear_history": "Effacer",
+    "redownload": "Re-DL",
+    "ffmpeg_warning_startup": "Attention : FFmpeg non détecté. La conversion audio ne fonctionnera pas."
+  },
+
+  "messages": {
+    "paste_url": "Veuillez coller une URL.",
+    "invalid_url": "URL invalide.",
+    "added_to_queue": "Ajouté à la file : {url} [{quality}]",
+    "queue_empty": "La file d'attente est vide.",
+    "stop_requested": "Arrêt demandé... annulation du téléchargement en cours.",
+    "queue_cleared": "File d'attente vidée.",
+    "download_complete": "Tous les téléchargements sont terminés.",
+    "download_task": "Téléchargement {index}/{total} : {url} [{quality}]",
+    "download_success": "Terminé : {message}",
+    "download_error": "Échec : {message}",
+    "file_not_found": "Fichier introuvable.",
+    "history_exported": "Historique exporté : {filepath}",
+    "history_export_error": "Erreur export CSV : {error}",
+    "history_cleared": "Historique effacé.",
+    "restart_required": "Redémarrez l'application pour changer de langue.",
+    "restart_for_theme": "Redémarrez l'application pour appliquer le thème complètement.",
+    "profile_applied": "Profil {profile} appliqué.",
+    "csv_filename": "historique_youtube.csv"
+  },
+
+  "backend": {
+    "invalid_url": "URL invalide. Veuillez coller une URL valide.",
+    "ffmpeg_missing_audio": "FFmpeg n'est pas installé.\nLa conversion audio nécessite FFmpeg.\nTéléchargez-le sur : https://ffmpeg.org/download.html",
+    "ffmpeg_warning_video": "Attention : FFmpeg absent, la qualité vidéo peut être limitée.",
+    "permission_denied": "Permission refusée pour créer le dossier :\n{path}",
+    "download_cancelled": "Téléchargement annulé par l'utilisateur.",
+    "download_error_private": "Vidéo privée/indisponible ou erreur réseau.",
+    "download_error_disk": "Erreur d'écriture sur le disque : {error}",
+    "download_error_generic": "Erreur inconnue : {error}",
+    "download_status": "Téléchargement : {percent} | Vitesse : {speed} | ETA : {eta}",
+    "download_finished": "Téléchargement terminé, traitement en cours...",
+    "fetching_info": "Récupération des informations vidéo...",
+    "download_success_mp4": "Vidéo MP4 téléchargée avec succès : {filepath}",
+    "download_success_audio": "Audio téléchargé avec succès : {filepath}"
+  },
+
+  "startup": {
+    "python_version_error": "Erreur : Python 3.9+ est requis. Version actuelle : {version}",
+    "output_dir_error": "Erreur : Impossible de créer le dossier de sortie :\n{path}",
+    "ffmpeg_warning": "Attention : FFmpeg n'est pas détecté dans le PATH.\nLa conversion en MP3 ne sera pas disponible."
+  },
+
+  "filename_templates": {
+    "title": "Titre",
+    "title_id": "Titre + ID",
+    "channel_title": "Chaîne - Titre",
+    "date_title": "Date + Titre"
+  },
+
+  "themes": {
+    "dark_blue": "Sombre Bleu",
+    "dark_green": "Sombre Vert",
+    "dark_purple": "Sombre Violet",
+    "dark_red": "Sombre Rouge",
+    "light_blue": "Clair Bleu",
+    "light_green": "Clair Vert",
+    "light_purple": "Clair Violet",
+    "light_red": "Clair Rouge",
+    "high_contrast_dark": "Contraste Élevé Sombre",
+    "high_contrast_light": "Contraste Élevé Clair"
+  }
+}

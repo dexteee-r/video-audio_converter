@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>yt-converter</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-mark">&gt;_</div>
+        <div class="logo-text">yt<span>converter</span></div>
+      </div>
+
+      <nav class="side-nav">
+        <button class="nav-item active" data-tab="queue">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 21h14"/></svg>
+          <span data-i18n="ui.queue_nav">File d'attente</span>
+          <span class="badge" id="queueBadge">0</span>
+        </button>
+        <button class="nav-item" data-tab="history">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+          <span data-i18n="ui.history_nav">Historique</span>
+        </button>
+      </nav>
+
+      <div class="side-field">
+        <label data-i18n="ui.language_label">Langue :</label>
+        <select id="langSelect">
+          <option value="fr">FR · Français</option>
+          <option value="en">EN · English</option>
+          <option value="es">ES · Español</option>
+          <option value="de">DE · Deutsch</option>
+        </select>
+      </div>
+
+      <div class="side-foot">
+        <div id="ffmpegPill" class="pill pill-ok">ffmpeg :: ok</div>
+        <div class="version">build · pywebview</div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- terminal window chrome -->
+      <div class="term-bar">
+        <span class="term-dots"><i></i><i></i><i></i></span>
+        <span class="term-path">momoe@yt-converter:~/downloads$<span class="cursor">&#9608;</span></span>
+      </div>
+
+      <header class="head">
+        <h1 data-i18n="app_title">Video Converter</h1>
+        <p data-i18n="app_subtitle">YouTube, TikTok, Instagram, Vimeo, Twitch et 1000+ sites</p>
+      </header>
+
+      <!-- URL -->
+      <section class="card url-card">
+        <label class="card-label" data-i18n="ui.url_label">URL de la vidéo</label>
+        <div class="url-row">
+          <input id="urlInput" type="text" autocomplete="off"
+                 data-i18n-ph="ui.url_placeholder"
+                 placeholder="Collez l'URL ici (YouTube, TikTok, Instagram, ...)" />
+          <span id="urlStatus" class="url-status"></span>
+        </div>
+      </section>
+
+      <!-- Folder -->
+      <section class="card folder-card">
+        <span class="folder-label" data-i18n="ui.folder_label">Destination</span>
+        <input id="folderInput" type="text" readonly />
+        <button id="browseBtn" class="btn btn-ghost">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h4l2 2.2h7A1.5 1.5 0 0 1 19 9.7v7.8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 3 17.5z"/></svg>
+          <span data-i18n="ui.browse_button">Parcourir…</span>
+        </button>
+      </section>
+
+      <!-- Config -->
+      <section class="card config-card">
+        <div class="config-head">
+          <span class="gear">$</span> <span data-i18n="ui.config_title">Configuration</span>
+          <div class="segmented" id="formatToggle">
+            <button class="seg active" data-format="video"><span data-i18n="ui.format_video">Vidéo</span></button>
+            <button class="seg" data-format="audio"><span data-i18n="ui.format_audio">Audio</span></button>
+          </div>
+        </div>
+
+        <div class="opts" id="videoOpts">
+          <div class="opt">
+            <label data-i18n="ui.video_quality_label">Qualité</label>
+            <select id="videoQuality"></select>
+          </div>
+          <div class="opt">
+            <label data-i18n="ui.video_format_label">Conteneur</label>
+            <select id="videoFormat"></select>
+          </div>
+          <div class="opt">
+            <label data-i18n="ui.profile_label">Profil</label>
+            <select id="profileSelect"></select>
+          </div>
+          <div class="opt">
+            <label data-i18n="ui.filename_template_label">Nom de fichier</label>
+            <select id="filenameTpl"></select>
+          </div>
+          <div class="opt opt-check">
+            <label class="check">
+              <input type="checkbox" id="compEnabled" />
+              <span class="checkbox"></span>
+              <span data-i18n="ui.compression_label">Compresser (ré-encodage)</span>
+            </label>
+            <select id="compPreset" disabled></select>
+          </div>
+        </div>
+
+        <div class="opts hidden" id="audioOpts">
+          <div class="opt">
+            <label data-i18n="ui.audio_format_label">Format</label>
+            <select id="audioFormat"></select>
+          </div>
+          <div class="opt">
+            <label data-i18n="ui.bitrate_label">Bitrate</label>
+            <select id="audioBitrate"></select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button id="addVideoBtn" class="btn btn-accent"><span data-i18n="ui.add_mp4">Ajouter vidéo</span></button>
+        <button id="addAudioBtn" class="btn btn-accent"><span data-i18n="ui.add_audio">Ajouter audio</span></button>
+        <button id="startBtn" class="btn btn-success"><span data-i18n="ui.start">Démarrer</span></button>
+        <button id="stopBtn" class="btn btn-danger hidden"><span data-i18n="ui.stop">Arrêter</span></button>
+      </div>
+
+      <!-- Progress -->
+      <section class="card progress-card">
+        <div class="progress-track"><div id="progressBar" class="progress-fill"></div></div>
+        <div class="progress-meta"><span id="progressPct">0%</span></div>
+      </section>
+
+      <!-- Post-download actions -->
+      <div class="actions post-actions hidden" id="postActions">
+        <button id="openFolderBtn" class="btn btn-ghost">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h4l2 2.2h7A1.5 1.5 0 0 1 19 9.7v7.8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 3 17.5z"/></svg>
+          <span data-i18n="ui.open_folder">Ouvrir le dossier</span>
+        </button>
+        <button id="playFileBtn" class="btn btn-ghost">
+          <svg class="ico" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8 5.5v13l11-6.5z"/></svg>
+          <span data-i18n="ui.play_file">Lire le fichier</span>
+        </button>
+      </div>
+
+      <!-- Queue tab -->
+      <section class="card list-card" id="tabQueue">
+        <div class="list-head">
+          <h3 data-i18n="ui.queue_nav">File d'attente</h3>
+          <button id="clearQueueBtn" class="btn btn-mini" data-i18n="ui.clear_queue">Vider</button>
+        </div>
+        <div id="queueList" class="list"></div>
+      </section>
+
+      <!-- History tab -->
+      <section class="card list-card hidden" id="tabHistory">
+        <div class="list-head">
+          <h3 data-i18n="ui.history_nav">Historique</h3>
+          <div class="list-head-actions">
+            <button id="exportCsvBtn" class="btn btn-mini" data-i18n="ui.export_csv">Exporter CSV</button>
+            <button id="clearHistoryBtn" class="btn btn-mini" data-i18n="ui.clear_history">Effacer</button>
+          </div>
+        </div>
+        <div id="historyList" class="list"></div>
+      </section>
+
+      <!-- Status log -->
+      <section class="card log-card">
+        <div class="log-title">// log</div>
+        <div id="statusLog" class="log"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

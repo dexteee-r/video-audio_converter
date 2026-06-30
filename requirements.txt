@@ -1,0 +1,8 @@
+# Runtime dependencies (source of truth: pyproject.toml)
+# Install the app in editable mode instead for development:  pip install -e .
+pywebview>=5.0
+yt-dlp>=2024.1.0
+pillow>=10.0.0
+
+# Packaging (.exe) — optional
+pyinstaller>=6.0.0

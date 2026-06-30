@@ -1,0 +1,105 @@
+{
+  "app_title": "Conversor de Video",
+  "app_subtitle": "YouTube, TikTok, Instagram, Vimeo, Twitch y 1000+ sitios",
+
+  "ui": {
+    "queue_nav": "Cola",
+    "history_nav": "Historial",
+    "config_title": "Configuración",
+    "format_video": "Vídeo",
+    "format_audio": "Audio",
+    "language_label": "Idioma:",
+    "theme_label": "Tema:",
+    "video_format_label": "Formato de video:",
+    "compression_label": "Compresión:",
+    "profile_label": "Perfil:",
+    "url_label": "URL del video:",
+    "url_placeholder": "Pegue la URL aquí (YouTube, TikTok, Instagram, etc.)",
+    "folder_label": "Carpeta de destino:",
+    "browse_button": "Examinar...",
+    "video_quality_label": "Calidad de video:",
+    "audio_format_label": "Formato de audio:",
+    "bitrate_label": "Bitrate:",
+    "kbps": "kbps",
+    "filename_template_label": "Nombre de archivo:",
+    "add_mp4": "Añadir MP4",
+    "add_audio": "Añadir Audio",
+    "start": "Iniciar",
+    "stop": "Detener",
+    "queue_title": "Cola ({count})",
+    "clear_queue": "Vaciar",
+    "progress_label": "Progreso:",
+    "open_folder": "Abrir carpeta",
+    "play_file": "Reproducir archivo",
+    "status_label": "Estado:",
+    "history_show": "Historial (mostrar)",
+    "history_hide": "Historial (ocultar)",
+    "export_csv": "Exportar CSV",
+    "clear_history": "Borrar",
+    "redownload": "Re-DL",
+    "ffmpeg_warning_startup": "Advertencia: FFmpeg no detectado. La conversión de audio no funcionará."
+  },
+
+  "messages": {
+    "paste_url": "Por favor pegue una URL.",
+    "invalid_url": "URL inválida.",
+    "added_to_queue": "Añadido a la cola: {url} [{quality}]",
+    "queue_empty": "La cola está vacía.",
+    "stop_requested": "Detención solicitada... cancelando descarga actual.",
+    "queue_cleared": "Cola vaciada.",
+    "download_complete": "Todas las descargas completadas.",
+    "download_task": "Descarga {index}/{total}: {url} [{quality}]",
+    "download_success": "Completado: {message}",
+    "download_error": "Fallido: {message}",
+    "file_not_found": "Archivo no encontrado.",
+    "history_exported": "Historial exportado: {filepath}",
+    "history_export_error": "Error de exportación CSV: {error}",
+    "history_cleared": "Historial borrado.",
+    "restart_required": "Reinicie la aplicación para cambiar el idioma.",
+    "restart_for_theme": "Reinicie la aplicación para aplicar el tema completamente.",
+    "profile_applied": "Perfil {profile} aplicado.",
+    "csv_filename": "historial_descargas.csv"
+  },
+
+  "backend": {
+    "invalid_url": "URL inválida. Por favor pegue una URL válida.",
+    "ffmpeg_missing_audio": "FFmpeg no está instalado.\nLa conversión de audio requiere FFmpeg.\nDescárguelo desde: https://ffmpeg.org/download.html",
+    "ffmpeg_warning_video": "Advertencia: FFmpeg no encontrado, la calidad de video puede ser limitada.",
+    "permission_denied": "Permiso denegado para crear carpeta:\n{path}",
+    "download_cancelled": "Descarga cancelada por el usuario.",
+    "download_error_private": "Video privado/no disponible o error de red.",
+    "download_error_disk": "Error de escritura en disco: {error}",
+    "download_error_generic": "Error desconocido: {error}",
+    "download_status": "Descargando: {percent} | Velocidad: {speed} | ETA: {eta}",
+    "download_finished": "Descarga completa, procesando...",
+    "fetching_info": "Obteniendo información del video...",
+    "download_success_mp4": "Video MP4 descargado exitosamente: {filepath}",
+    "download_success_audio": "Audio descargado exitosamente: {filepath}"
+  },
+
+  "startup": {
+    "python_version_error": "Error: Se requiere Python 3.9+. Versión actual: {version}",
+    "output_dir_error": "Error: No se puede crear la carpeta de salida:\n{path}",
+    "ffmpeg_warning": "Advertencia: FFmpeg no detectado en PATH.\nLa conversión MP3 no estará disponible."
+  },
+
+  "filename_templates": {
+    "title": "Título",
+    "title_id": "Título + ID",
+    "channel_title": "Canal - Título",
+    "date_title": "Fecha + Título"
+  },
+
+  "themes": {
+    "dark_blue": "Oscuro Azul",
+    "dark_green": "Oscuro Verde",
+    "dark_purple": "Oscuro Púrpura",
+    "dark_red": "Oscuro Rojo",
+    "light_blue": "Claro Azul",
+    "light_green": "Claro Verde",
+    "light_purple": "Claro Púrpura",
+    "light_red": "Claro Rojo",
+    "high_contrast_dark": "Alto Contraste Oscuro",
+    "high_contrast_light": "Alto Contraste Claro"
+  }
+}

@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Packaging / build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Virtual environment
+venv/
+ENV/
+env/
+
+# Editable install / setuptools
+src/*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs (runtime logs live in %APPDATA%/YouTubeConverter)
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temp
+*.tmp
+*.bak
+*.part
+
+# Claude / AI assistant
+.claude/
+CLAUDE.md
+tasks/

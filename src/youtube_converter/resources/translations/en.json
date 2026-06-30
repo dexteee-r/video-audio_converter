@@ -1,0 +1,105 @@
+{
+  "app_title": "Video Converter",
+  "app_subtitle": "YouTube, TikTok, Instagram, Vimeo, Twitch and 1000+ sites",
+
+  "ui": {
+    "queue_nav": "Queue",
+    "history_nav": "History",
+    "config_title": "Configuration",
+    "format_video": "Video",
+    "format_audio": "Audio",
+    "language_label": "Language:",
+    "theme_label": "Theme:",
+    "video_format_label": "Video format:",
+    "compression_label": "Compression:",
+    "profile_label": "Profile:",
+    "url_label": "Video URL:",
+    "url_placeholder": "Paste URL here (YouTube, TikTok, Instagram, etc.)",
+    "folder_label": "Output folder:",
+    "browse_button": "Browse...",
+    "video_quality_label": "Video quality:",
+    "audio_format_label": "Audio format:",
+    "bitrate_label": "Bitrate:",
+    "kbps": "kbps",
+    "filename_template_label": "Filename:",
+    "add_mp4": "Add MP4",
+    "add_audio": "Add Audio",
+    "start": "Start",
+    "stop": "Stop",
+    "queue_title": "Queue ({count})",
+    "clear_queue": "Clear",
+    "progress_label": "Progress:",
+    "open_folder": "Open folder",
+    "play_file": "Play file",
+    "status_label": "Status:",
+    "history_show": "History (show)",
+    "history_hide": "History (hide)",
+    "export_csv": "Export CSV",
+    "clear_history": "Clear",
+    "redownload": "Re-DL",
+    "ffmpeg_warning_startup": "Warning: FFmpeg not detected. Audio conversion will not work."
+  },
+
+  "messages": {
+    "paste_url": "Please paste a URL.",
+    "invalid_url": "Invalid URL.",
+    "added_to_queue": "Added to queue: {url} [{quality}]",
+    "queue_empty": "The queue is empty.",
+    "stop_requested": "Stop requested... canceling current download.",
+    "queue_cleared": "Queue cleared.",
+    "download_complete": "All downloads completed.",
+    "download_task": "Download {index}/{total}: {url} [{quality}]",
+    "download_success": "Completed: {message}",
+    "download_error": "Failed: {message}",
+    "file_not_found": "File not found.",
+    "history_exported": "History exported: {filepath}",
+    "history_export_error": "CSV export error: {error}",
+    "history_cleared": "History cleared.",
+    "restart_required": "Restart the application to change language.",
+    "restart_for_theme": "Restart the application to apply the theme completely.",
+    "profile_applied": "Profile {profile} applied.",
+    "csv_filename": "download_history.csv"
+  },
+
+  "backend": {
+    "invalid_url": "Invalid URL. Please paste a valid URL.",
+    "ffmpeg_missing_audio": "FFmpeg is not installed.\nAudio conversion requires FFmpeg.\nDownload it from: https://ffmpeg.org/download.html",
+    "ffmpeg_warning_video": "Warning: FFmpeg not found, video quality may be limited.",
+    "permission_denied": "Permission denied to create folder:\n{path}",
+    "download_cancelled": "Download cancelled by user.",
+    "download_error_private": "Private/unavailable video or network error.",
+    "download_error_disk": "Disk write error: {error}",
+    "download_error_generic": "Unknown error: {error}",
+    "download_status": "Downloading: {percent} | Speed: {speed} | ETA: {eta}",
+    "download_finished": "Download complete, processing...",
+    "fetching_info": "Fetching video information...",
+    "download_success_mp4": "MP4 video downloaded successfully: {filepath}",
+    "download_success_audio": "Audio downloaded successfully: {filepath}"
+  },
+
+  "startup": {
+    "python_version_error": "Error: Python 3.9+ required. Current version: {version}",
+    "output_dir_error": "Error: Cannot create output folder:\n{path}",
+    "ffmpeg_warning": "Warning: FFmpeg not detected in PATH.\nMP3 conversion will not be available."
+  },
+
+  "filename_templates": {
+    "title": "Title",
+    "title_id": "Title + ID",
+    "channel_title": "Channel - Title",
+    "date_title": "Date + Title"
+  },
+
+  "themes": {
+    "dark_blue": "Dark Blue",
+    "dark_green": "Dark Green",
+    "dark_purple": "Dark Purple",
+    "dark_red": "Dark Red",
+    "light_blue": "Light Blue",
+    "light_green": "Light Green",
+    "light_purple": "Light Purple",
+    "light_red": "Light Red",
+    "high_contrast_dark": "High Contrast Dark",
+    "high_contrast_light": "High Contrast Light"
+  }
+}
