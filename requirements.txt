@@ -1,7 +1,7 @@
 # Runtime dependencies (source of truth: pyproject.toml)
 # Install the app in editable mode instead for development:  pip install -e .
 pywebview>=5.0
-yt-dlp>=2024.1.0
+yt-dlp>=2026.6.0   # keep recent: older versions get throttled to 360p by YouTube
 pillow>=10.0.0
 
 # Packaging (.exe) — optional

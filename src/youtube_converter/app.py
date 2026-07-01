@@ -49,12 +49,15 @@ class Api:
         set_language(self._settings.get("language", "fr"))
         self.output_dir = self._settings["output_dir"]
         self._history = DownloadHistory(max_entries=self._settings.get("max_history", 50))
+        self._current_index = None
         self._queue = DownloadQueue(
             output_dir=self.output_dir,
-            on_task_start=lambda t, i: self._push("task_start", {"index": i, "task": _task_to_dict(t)}),
+            on_task_start=self._on_task_start,
             on_task_complete=self._on_task_complete,
-            on_queue_empty=lambda: self._push("queue_empty", {}),
-            on_progress=lambda p: self._push("progress", {"percent": round(p, 1)}),
+            on_queue_empty=self._on_queue_empty,
+            on_progress=lambda p: self._push(
+                "progress", {"percent": round(p, 1), "index": self._current_index}
+            ),
             on_status=lambda m: self._push("status", {"message": m}),
         )
 
@@ -71,6 +74,14 @@ class Api:
             self._window.evaluate_js(f"window.onPush({json.dumps(event)}, {payload})")
         except Exception:
             pass  # window closed mid-update
+
+    def _on_task_start(self, task: DownloadTask, index: int):
+        self._current_index = index
+        self._push("task_start", {"index": index, "task": _task_to_dict(task)})
+
+    def _on_queue_empty(self):
+        self._current_index = None
+        self._push("queue_empty", {})
 
     def _on_task_complete(self, task: DownloadTask, index: int, result: dict):
         filepath = result.get("filepath", "")
@@ -152,6 +163,10 @@ class Api:
     def validate_url(self, url: str) -> bool:
         return Downloader.validate_url(url or "")
 
+    def fetch_info(self, url: str) -> dict:
+        """Pre-fetch media metadata for the preview card (no download)."""
+        return Downloader.fetch_info(url or "")
+
     def browse_folder(self) -> str:
         result = self._window.create_file_dialog(webview.FOLDER_DIALOG)
         if result:
@@ -216,13 +231,13 @@ class Api:
 def main():
     api = Api()
     window = webview.create_window(
-        title="YouTube Converter — Web UI (prototype)",
+        title="YouTube Converter",
         url=os.path.join(WEB_DIR, "index.html"),
         js_api=api,
-        width=1080,
-        height=860,
-        min_size=(940, 760),
-        background_color="#0B0E14",
+        width=1280,
+        height=800,
+        min_size=(1100, 720),
+        background_color="#0a0a0f",
     )
     api.set_window(window)
     webview.start()

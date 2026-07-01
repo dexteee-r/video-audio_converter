@@ -9,178 +9,227 @@
 <body>
   <div class="scanlines" aria-hidden="true"></div>
 
-  <div class="app">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="logo">
-        <div class="logo-mark">&gt;_</div>
-        <div class="logo-text">yt<span>converter</span></div>
-      </div>
+  <div class="shell">
+    <!-- terminal chrome -->
+    <div class="term-bar">
+      <span class="term-dots"><i></i><i></i><i></i></span>
+      <span class="term-path">momoe@yt-converter:~/downloads$<span class="cursor">&#9608;</span></span>
+      <span class="term-right">
+        <span id="ffmpegPill" class="pill pill-ok">ffmpeg :: ok</span>
+      </span>
+    </div>
 
-      <nav class="side-nav">
-        <button class="nav-item active" data-tab="queue">
-          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 21h14"/></svg>
+    <!-- logo + tabs -->
+    <div class="topnav">
+      <div class="logo">
+        <span class="logo-mark">&gt;_</span>
+        <span class="logo-text">yt<span>converter</span></span>
+      </div>
+      <nav class="tabs" id="tabs">
+        <button class="tab active" data-tab="queue">
+          <span class="tab-glyph">&gt;_</span>
           <span data-i18n="ui.queue_nav">File d'attente</span>
           <span class="badge" id="queueBadge">0</span>
         </button>
-        <button class="nav-item" data-tab="history">
-          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+        <button class="tab" data-tab="history">
           <span data-i18n="ui.history_nav">Historique</span>
         </button>
-      </nav>
-
-      <div class="side-field">
-        <label data-i18n="ui.language_label">Langue :</label>
-        <select id="langSelect">
-          <option value="fr">FR · Français</option>
-          <option value="en">EN · English</option>
-          <option value="es">ES · Español</option>
-          <option value="de">DE · Deutsch</option>
-        </select>
-      </div>
-
-      <div class="side-foot">
-        <div id="ffmpegPill" class="pill pill-ok">ffmpeg :: ok</div>
-        <div class="version">build · pywebview</div>
-      </div>
-    </aside>
-
-    <!-- Main -->
-    <main class="main">
-      <!-- terminal window chrome -->
-      <div class="term-bar">
-        <span class="term-dots"><i></i><i></i><i></i></span>
-        <span class="term-path">momoe@yt-converter:~/downloads$<span class="cursor">&#9608;</span></span>
-      </div>
-
-      <header class="head">
-        <h1 data-i18n="app_title">Video Converter</h1>
-        <p data-i18n="app_subtitle">YouTube, TikTok, Instagram, Vimeo, Twitch et 1000+ sites</p>
-      </header>
-
-      <!-- URL -->
-      <section class="card url-card">
-        <label class="card-label" data-i18n="ui.url_label">URL de la vidéo</label>
-        <div class="url-row">
-          <input id="urlInput" type="text" autocomplete="off"
-                 data-i18n-ph="ui.url_placeholder"
-                 placeholder="Collez l'URL ici (YouTube, TikTok, Instagram, ...)" />
-          <span id="urlStatus" class="url-status"></span>
-        </div>
-      </section>
-
-      <!-- Folder -->
-      <section class="card folder-card">
-        <span class="folder-label" data-i18n="ui.folder_label">Destination</span>
-        <input id="folderInput" type="text" readonly />
-        <button id="browseBtn" class="btn btn-ghost">
-          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h4l2 2.2h7A1.5 1.5 0 0 1 19 9.7v7.8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 3 17.5z"/></svg>
-          <span data-i18n="ui.browse_button">Parcourir…</span>
+        <button class="tab" data-tab="settings">
+          <span class="tab-glyph">$</span>
+          <span data-i18n="ui.settings_nav">Réglages</span>
         </button>
-      </section>
+      </nav>
+    </div>
 
-      <!-- Config -->
-      <section class="card config-card">
-        <div class="config-head">
-          <span class="gear">$</span> <span data-i18n="ui.config_title">Configuration</span>
-          <div class="segmented" id="formatToggle">
-            <button class="seg active" data-format="video"><span data-i18n="ui.format_video">Vidéo</span></button>
-            <button class="seg" data-format="audio"><span data-i18n="ui.format_audio">Audio</span></button>
-          </div>
-        </div>
+    <!-- ================= QUEUE / DOWNLOAD ================= -->
+    <section class="panel scr" id="panel-queue">
+      <h1 class="page-h1"><span class="h1-prompt">&gt; </span><span data-i18n="ui.download_title">Télécharger un média</span></h1>
+      <p class="page-sub" data-i18n="ui.download_subtitle">Collez un lien — l'app détecte le média et le télécharge en un clic.</p>
 
-        <div class="opts" id="videoOpts">
-          <div class="opt">
-            <label data-i18n="ui.video_quality_label">Qualité</label>
-            <select id="videoQuality"></select>
-          </div>
-          <div class="opt">
-            <label data-i18n="ui.video_format_label">Conteneur</label>
-            <select id="videoFormat"></select>
-          </div>
-          <div class="opt">
-            <label data-i18n="ui.profile_label">Profil</label>
-            <select id="profileSelect"></select>
-          </div>
-          <div class="opt">
-            <label data-i18n="ui.filename_template_label">Nom de fichier</label>
-            <select id="filenameTpl"></select>
-          </div>
-          <div class="opt opt-check">
-            <label class="check">
-              <input type="checkbox" id="compEnabled" />
-              <span class="checkbox"></span>
-              <span data-i18n="ui.compression_label">Compresser (ré-encodage)</span>
-            </label>
-            <select id="compPreset" disabled></select>
-          </div>
-        </div>
-
-        <div class="opts hidden" id="audioOpts">
-          <div class="opt">
-            <label data-i18n="ui.audio_format_label">Format</label>
-            <select id="audioFormat"></select>
-          </div>
-          <div class="opt">
-            <label data-i18n="ui.bitrate_label">Bitrate</label>
-            <select id="audioBitrate"></select>
-          </div>
-        </div>
-      </section>
-
-      <!-- Actions -->
-      <div class="actions">
-        <button id="addVideoBtn" class="btn btn-accent"><span data-i18n="ui.add_mp4">Ajouter vidéo</span></button>
-        <button id="addAudioBtn" class="btn btn-accent"><span data-i18n="ui.add_audio">Ajouter audio</span></button>
-        <button id="startBtn" class="btn btn-success"><span data-i18n="ui.start">Démarrer</span></button>
-        <button id="stopBtn" class="btn btn-danger hidden"><span data-i18n="ui.stop">Arrêter</span></button>
+      <!-- paste bar -->
+      <div class="paste" id="pasteBar">
+        <span class="paste-prompt">&gt;</span>
+        <input id="urlInput" type="text" autocomplete="off"
+               data-i18n-ph="ui.paste_placeholder"
+               placeholder="Collez une URL (YouTube, TikTok, Instagram, Vimeo…)" />
+        <span id="detectChip" class="detect-chip"></span>
       </div>
 
-      <!-- Progress -->
-      <section class="card progress-card">
-        <div class="progress-track"><div id="progressBar" class="progress-fill"></div></div>
-        <div class="progress-meta"><span id="progressPct">0%</span></div>
-      </section>
+      <!-- analyzing state -->
+      <div class="analyzing hidden" id="analyzing">
+        <span class="spinner" aria-hidden="true"></span>
+        <span data-i18n="ui.analyzing_link">Analyse du lien…</span>
+      </div>
 
-      <!-- Post-download actions -->
-      <div class="actions post-actions hidden" id="postActions">
-        <button id="openFolderBtn" class="btn btn-ghost">
+      <!-- detected media card -->
+      <div class="media-card" id="mediaCard">
+        <div class="media-top">
+          <div class="media-thumb" id="mediaThumb">
+            <span class="thumb-ph" data-i18n="ui.card_preview">aperçu // yt-dlp</span>
+            <span class="thumb-dur" id="mediaDur">--:--</span>
+          </div>
+          <div class="media-meta">
+            <div class="media-title" id="mediaTitle" data-i18n="ui.card_empty_title">Aucun média analysé</div>
+            <div class="media-channel" id="mediaChannel" data-i18n="ui.card_empty_sub">Collez un lien pour afficher l'aperçu</div>
+            <div class="media-badges" id="mediaBadges"></div>
+          </div>
+        </div>
+
+        <div class="media-actions">
+          <!-- video button -->
+          <div class="split" id="vidSplit">
+            <button class="split-main" id="addVideoBtn">
+              <span class="split-label">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3z"/></svg>
+                <span data-i18n="ui.dl_video">Télécharger Vidéo</span>
+              </span>
+              <span class="split-sub" id="vidSubText">image + son</span>
+            </button>
+          </div>
+
+          <!-- audio button -->
+          <div class="split split-aud" id="audSplit">
+            <button class="split-main" id="addAudioBtn">
+              <span class="split-label">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg>
+                <span data-i18n="ui.dl_audio">Télécharger Audio</span>
+              </span>
+              <span class="split-sub" id="audSubText">son seul</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="card-idle-hint" id="cardIdleHint" data-i18n="ui.card_idle_hint">↑ collez un lien d'abord pour activer le téléchargement</div>
+      </div>
+
+      <!-- queue -->
+      <div class="sec-head">
+        <h3 class="sec-h3"><span class="sec-prefix">// </span><span data-i18n="ui.queue_word">file</span> (<span id="queueCount">0</span>)</h3>
+        <div class="sec-actions">
+          <button id="stopBtn" class="btn-mini btn-mini-danger hidden" data-i18n="ui.stop">Arrêter</button>
+          <button id="clearQueueBtn" class="btn-mini" data-i18n="ui.clear_queue">Vider</button>
+        </div>
+      </div>
+      <div id="queueList" class="rows"></div>
+
+      <!-- post-run actions -->
+      <div class="post-actions hidden" id="postActions">
+        <button id="openFolderBtn" class="btn-ghost">
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h4l2 2.2h7A1.5 1.5 0 0 1 19 9.7v7.8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 3 17.5z"/></svg>
           <span data-i18n="ui.open_folder">Ouvrir le dossier</span>
         </button>
-        <button id="playFileBtn" class="btn btn-ghost">
+        <button id="playLastBtn" class="btn-ghost">
           <svg class="ico" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8 5.5v13l11-6.5z"/></svg>
-          <span data-i18n="ui.play_file">Lire le fichier</span>
+          <span data-i18n="ui.play_last">Lire le dernier fichier</span>
         </button>
       </div>
 
-      <!-- Queue tab -->
-      <section class="card list-card" id="tabQueue">
-        <div class="list-head">
-          <h3 data-i18n="ui.queue_nav">File d'attente</h3>
-          <button id="clearQueueBtn" class="btn btn-mini" data-i18n="ui.clear_queue">Vider</button>
-        </div>
-        <div id="queueList" class="list"></div>
-      </section>
-
-      <!-- History tab -->
-      <section class="card list-card hidden" id="tabHistory">
-        <div class="list-head">
-          <h3 data-i18n="ui.history_nav">Historique</h3>
-          <div class="list-head-actions">
-            <button id="exportCsvBtn" class="btn btn-mini" data-i18n="ui.export_csv">Exporter CSV</button>
-            <button id="clearHistoryBtn" class="btn btn-mini" data-i18n="ui.clear_history">Effacer</button>
-          </div>
-        </div>
-        <div id="historyList" class="list"></div>
-      </section>
-
-      <!-- Status log -->
-      <section class="card log-card">
+      <!-- log -->
+      <div class="log-card">
         <div class="log-title">// log</div>
         <div id="statusLog" class="log"></div>
-      </section>
-    </main>
+      </div>
+    </section>
+
+    <!-- ================= HISTORY ================= -->
+    <section class="panel scr hidden" id="panel-history">
+      <div class="page-head-row">
+        <h1 class="page-h1"><span class="h1-prompt">&gt; </span><span data-i18n="ui.history_nav">Historique</span></h1>
+        <div class="sec-actions">
+          <button id="exportCsvBtn" class="btn-mini" data-i18n="ui.export_csv">Exporter CSV</button>
+          <button id="clearHistoryBtn" class="btn-mini" data-i18n="ui.clear_history">Effacer</button>
+        </div>
+      </div>
+      <div id="historyList" class="rows"></div>
+    </section>
+
+    <!-- ================= SETTINGS ================= -->
+    <section class="panel scr hidden" id="panel-settings">
+      <h1 class="page-h1"><span class="h1-prompt">&gt; </span><span data-i18n="ui.settings_nav">Réglages</span></h1>
+      <p class="page-sub" data-i18n="ui.settings_subtitle">Réglés une fois, appliqués à tous vos téléchargements.</p>
+
+      <!-- Général -->
+      <div class="set-group"><span class="set-group-prefix">// </span><span data-i18n="ui.group_general">Général</span></div>
+      <div class="settings-grid">
+        <div class="set-card set-wide">
+          <div class="set-title"><span class="set-prefix">$ </span><span data-i18n="ui.destination_title">Destination</span></div>
+          <div class="set-row">
+            <input id="folderInput" type="text" readonly />
+            <button id="browseBtn" class="btn-ghost">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h4l2 2.2h7A1.5 1.5 0 0 1 19 9.7v7.8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 3 17.5z"/></svg>
+              <span data-i18n="ui.browse_button">Parcourir…</span>
+            </button>
+          </div>
+        </div>
+        <div class="set-card">
+          <div class="set-title"><span class="set-prefix">$ </span><span data-i18n="ui.filename_title">Nom de fichier</span></div>
+          <p class="set-desc" data-i18n="ui.filename_desc">Modèle de nommage des fichiers téléchargés.</p>
+          <select id="filenameTpl"></select>
+          <div class="set-hint" id="filenamePreview"></div>
+        </div>
+        <div class="set-card">
+          <div class="set-title"><span class="set-prefix">$ </span><span data-i18n="ui.profile_title">Profil d'appareil</span></div>
+          <p class="set-desc" data-i18n="ui.profile_desc">Pré-règle format + qualité pour une cible (iPhone, TV…).</p>
+          <select id="profileSelect"></select>
+        </div>
+        <div class="set-card">
+          <div class="set-title"><span class="set-prefix">$ </span><span data-i18n="ui.language_title">Langue</span></div>
+          <select id="langSelect">
+            <option value="fr">FR · Français</option>
+            <option value="en">EN · English</option>
+            <option value="es">ES · Español</option>
+            <option value="de">DE · Deutsch</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Vidéo -->
+      <div class="set-group"><span class="set-group-prefix">// </span><span data-i18n="ui.group_video">Vidéo</span></div>
+      <div class="settings-grid">
+        <div class="set-card">
+          <div class="set-title"><span class="set-prefix">$ </span><span data-i18n="ui.quality_title">Qualité vidéo</span></div>
+          <select id="videoQuality"></select>
+        </div>
+        <div class="set-card">
+          <div class="set-title"><span class="set-prefix">$ </span><span data-i18n="ui.container_title">Conteneur</span></div>
+          <select id="videoFormat"></select>
+        </div>
+        <div class="set-card set-wide set-flex">
+          <div class="set-flex-text">
+            <div class="set-title"><span class="set-prefix">$ </span><span data-i18n="ui.compression_title">Compression (ré-encodage)</span></div>
+            <p class="set-desc" data-i18n="ui.compression_desc">Réduit la taille au prix d'un ré-encodage plus lent. Désactivé = qualité d'origine.</p>
+          </div>
+          <label class="check">
+            <input type="checkbox" id="compEnabled" />
+            <span class="checkbox"></span>
+            <span data-i18n="ui.enable_word">Activer</span>
+          </label>
+          <select id="compPreset" class="comp-preset" disabled></select>
+        </div>
+      </div>
+
+      <!-- Audio -->
+      <div class="set-group"><span class="set-group-prefix">// </span><span data-i18n="ui.group_audio">Audio</span></div>
+      <div class="settings-grid">
+        <div class="set-card">
+          <div class="set-title"><span class="set-prefix">$ </span><span data-i18n="ui.audioformat_title">Format audio</span></div>
+          <select id="audioFormat"></select>
+        </div>
+        <div class="set-card">
+          <div class="set-title"><span class="set-prefix">$ </span><span data-i18n="ui.bitrate_title">Bitrate</span></div>
+          <select id="audioBitrate"></select>
+        </div>
+      </div>
+
+      <!-- Dépendances -->
+      <div class="set-group"><span class="set-group-prefix">// </span><span data-i18n="ui.dependencies_title">Dépendances</span></div>
+      <div class="settings-grid">
+        <div class="set-card set-wide">
+          <div class="dep-row"><span class="dot success"></span><span id="depFfmpeg" data-i18n="ui.ffmpeg_ok_label">FFmpeg détecté · ok</span></div>
+          <div class="dep-row"><span class="dot success"></span><span class="ytdlp" data-i18n="ui.ytdlp_label">yt-dlp</span></div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <script src="app.js"></script>

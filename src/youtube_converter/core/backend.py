@@ -20,6 +20,17 @@ from youtube_converter.utils.i18n import t
 log = get_logger("backend")
 
 
+def _format_duration(seconds) -> str:
+    """Format a duration in seconds as H:MM:SS, or M:SS when under an hour."""
+    try:
+        total = int(seconds)
+    except (TypeError, ValueError):
+        return "--:--"
+    h, rem = divmod(total, 3600)
+    m, s = divmod(rem, 60)
+    return f"{h}:{m:02d}:{s:02d}" if h else f"{m}:{s:02d}"
+
+
 class Downloader:
     """
     YouTube video/audio downloader using yt-dlp.
@@ -69,6 +80,52 @@ class Downloader:
         (YouTube, TikTok, Instagram, Vimeo, Dailymotion, Twitch, etc.).
         """
         return bool(re.match(r"^https?://\S+", url.strip()))
+
+    @staticmethod
+    def fetch_info(url: str) -> dict:
+        """
+        Extract media metadata WITHOUT downloading, for the preview card.
+
+        Returns {success: True, title, uploader, duration, thumbnail, qualities,
+        has_audio} on success, or {success: False, message} on failure. Never
+        raises — the UI degrades gracefully when this fails.
+        """
+        if not Downloader.validate_url(url):
+            return {"success": False, "message": "invalid_url"}
+
+        opts = {
+            "quiet": True,
+            "no_warnings": True,
+            "skip_download": True,
+            "noplaylist": True,
+        }
+        try:
+            with yt_dlp.YoutubeDL(opts) as ydl:
+                info = ydl.extract_info(url, download=False)
+
+            # If a playlist slipped through, describe its first entry.
+            if info.get("_type") == "playlist" and info.get("entries"):
+                info = info["entries"][0]
+
+            formats = info.get("formats") or []
+            standard = (144, 240, 360, 480, 720, 1080, 1440, 2160)
+            heights = sorted(
+                h for h in {f.get("height") for f in formats if f.get("height")}
+                if h in standard
+            )
+            has_audio = any(f.get("acodec") not in (None, "none") for f in formats)
+            return {
+                "success": True,
+                "title": info.get("title") or url,
+                "uploader": info.get("uploader") or info.get("channel") or "",
+                "duration": _format_duration(info.get("duration")),
+                "thumbnail": info.get("thumbnail"),
+                "qualities": [f"{h}p" for h in heights],
+                "has_audio": has_audio,
+            }
+        except Exception as e:  # noqa: BLE001 - surface any extraction failure to the UI
+            log.warning(f"fetch_info failed for {url}: {e}")
+            return {"success": False, "message": str(e)}
 
     def _progress_hook(self, d: dict):
         """
@@ -308,12 +365,14 @@ class Downloader:
                 ydl_opts["format"] = (
                     f"bestvideo[height<={height}][ext=webm]+bestaudio[ext=webm]"
                     f"/best[height<={height}]"
+                    f"/best"
                 )
             else:
                 # For other formats, use general best format
                 ydl_opts["format"] = (
                     f"bestvideo[height<={height}]+bestaudio"
                     f"/best[height<={height}]"
+                    f"/best"
                 )
 
             ydl_opts["merge_output_format"] = format_config["merge_format"]
