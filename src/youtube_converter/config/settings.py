@@ -28,6 +28,7 @@ DEFAULTS = {
     "video_format": "MP4",  # MP4 | MKV | WEBM | AVI | MOV
     "compression_preset": "Medium",  # High | Medium | Low (only when enabled)
     "compression_enabled": False,    # Re-encode off by default (direct download)
+    "auto_update_ytdlp": True,       # Keep yt-dlp fresh on startup (background)
 }
 
 

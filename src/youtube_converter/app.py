@@ -50,6 +50,7 @@ class Api:
         self.output_dir = self._settings["output_dir"]
         self._history = DownloadHistory(max_entries=self._settings.get("max_history", 50))
         self._current_index = None
+        self._update_checked = False
         self._queue = DownloadQueue(
             output_dir=self.output_dir,
             on_task_start=self._on_task_start,
@@ -74,6 +75,18 @@ class Api:
             self._window.evaluate_js(f"window.onPush({json.dumps(event)}, {payload})")
         except Exception:
             pass  # window closed mid-update
+
+    def _maybe_check_ytdlp(self):
+        """Start a one-shot background yt-dlp freshness check (if enabled)."""
+        if self._update_checked or not self._settings.get("auto_update_ytdlp", True):
+            return
+        self._update_checked = True
+        from youtube_converter.core.updater import check_and_update_async
+        check_and_update_async(
+            lambda state, cur, latest: self._push(
+                "ytdlp_status", {"state": state, "version": cur, "latest": latest}
+            )
+        )
 
     def _on_task_start(self, task: DownloadTask, index: int):
         self._current_index = index
@@ -107,6 +120,7 @@ class Api:
     def get_config(self) -> dict:
         """Initial state for the frontend."""
         lang = self._settings.get("language", "fr")
+        self._maybe_check_ytdlp()
         return {
             "colors": COLORS,
             "output_dir": self.output_dir,
@@ -121,6 +135,7 @@ class Api:
                 "audio_bitrate": self._settings.get("audio_bitrate", "192"),
                 "compression_preset": self._settings.get("compression_preset", "Medium"),
                 "compression_enabled": self._settings.get("compression_enabled", False),
+                "auto_update_ytdlp": self._settings.get("auto_update_ytdlp", True),
             },
             "history": self._history.get_entries()[:30],
         }

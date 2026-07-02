@@ -29,6 +29,7 @@ const FALLBACK_I18N = {
     dl_video_sub: "image + son", dl_audio_sub: "son seul",
     card_empty_title: "Aucun média analysé", card_empty_sub: "Collez un lien pour afficher l'aperçu",
     ffmpeg_missing_label: "FFmpeg introuvable",
+    ytdlp_label: "yt-dlp", ytdlp_checking: "vérification…", ytdlp_uptodate: "à jour", ytdlp_updated: "mise à jour prête — redémarrez",
   },
   messages: {
     invalid_url: "URL invalide.", added_to_queue: "Ajouté à la file : {url} [{quality}]",
@@ -158,6 +159,7 @@ function initWithConfig(c) {
   fillSelect($("compPreset"), ["High", "Medium", "Low"], cfg.compression_preset);
   $("compEnabled").checked = cfg.compression_enabled;
   $("compPreset").disabled = !cfg.compression_enabled;
+  $("autoUpdate").checked = d.auto_update_ytdlp !== false;
   updateFilenamePreview();
   updateButtonSubs();
 
@@ -483,6 +485,9 @@ $("compPreset").addEventListener("change", () => {
   cfg.compression_preset = $("compPreset").value;
   if (window.pywebview) api().save_pref("compression_preset", cfg.compression_preset);
 });
+$("autoUpdate").addEventListener("change", () => {
+  if (window.pywebview) api().save_pref("auto_update_ytdlp", $("autoUpdate").checked);
+});
 
 function updateFilenamePreview() {
   const tpl = cfg.filename_template;
@@ -515,6 +520,24 @@ window.onPush = (event, data) => {
       else log(t("messages.download_error", { message: data.message }), "err");
       api().get_queue().then(renderQueue);
       break;
+    case "ytdlp_status": {
+      const el = $("depYtdlp"), dot = $("depYtdlpDot");
+      const ver = data.version && data.version !== "0" ? " · " + data.version : "";
+      if (data.state === "checking") {
+        el.textContent = t("ui.ytdlp_label") + ver + " · " + t("ui.ytdlp_checking");
+      } else if (data.state === "uptodate") {
+        el.textContent = t("ui.ytdlp_label") + ver + " · " + t("ui.ytdlp_uptodate");
+        if (dot) dot.className = "dot success";
+      } else if (data.state === "updated") {
+        el.textContent = t("ui.ytdlp_label") + " · " + data.latest + " · " + t("ui.ytdlp_updated");
+        if (dot) dot.className = "dot downloading";
+        log(`yt-dlp ${data.version} → ${data.latest} — ${t("ui.ytdlp_updated")}`, "ok");
+      } else {
+        el.textContent = t("ui.ytdlp_label") + ver;
+        if (dot) dot.className = "dot pending";
+      }
+      break;
+    }
     case "queue_empty":
       currentProgress = 0;
       $("stopBtn").classList.add("hidden");

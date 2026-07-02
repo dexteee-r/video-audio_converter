@@ -226,7 +226,12 @@
       <div class="settings-grid">
         <div class="set-card set-wide">
           <div class="dep-row"><span class="dot success"></span><span id="depFfmpeg" data-i18n="ui.ffmpeg_ok_label">FFmpeg détecté · ok</span></div>
-          <div class="dep-row"><span class="dot success"></span><span class="ytdlp" data-i18n="ui.ytdlp_label">yt-dlp</span></div>
+          <div class="dep-row"><span class="dot success" id="depYtdlpDot"></span><span id="depYtdlp" data-i18n="ui.ytdlp_label">yt-dlp</span></div>
+          <label class="check dep-check">
+            <input type="checkbox" id="autoUpdate" />
+            <span class="checkbox"></span>
+            <span data-i18n="ui.autoupdate_label">Mettre à jour yt-dlp au démarrage</span>
+          </label>
         </div>
       </div>
     </section>

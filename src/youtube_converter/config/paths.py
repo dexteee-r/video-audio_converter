@@ -69,3 +69,16 @@ def log_dir() -> str:
     path = os.path.join(user_data_dir(), "logs")
     os.makedirs(path, exist_ok=True)
     return path
+
+
+def ytdlp_dir() -> str:
+    """
+    Writable directory holding an externally-updatable copy of yt-dlp.
+
+    Kept outside the (read-only, possibly frozen) bundle so the app can refresh
+    yt-dlp over time. When it contains a ``yt_dlp`` package, it takes precedence
+    over the bundled one (see core.updater.bootstrap_ytdlp_path).
+    """
+    path = os.path.join(user_data_dir(), "yt-dlp")
+    os.makedirs(path, exist_ok=True)
+    return path

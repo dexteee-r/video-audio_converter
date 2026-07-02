@@ -345,6 +345,7 @@ html, body {
 .check input:checked + .checkbox::after { opacity: 1; transform: scale(1); }
 .dep-row { display: flex; align-items: center; gap: 10px; font-size: 12px; margin-top: 9px; }
 .dep-row:first-of-type { margin-top: 0; }
+.dep-check { margin-top: 14px; font-size: 12px; }
 
 /* ---------- form controls ---------- */
 select {
