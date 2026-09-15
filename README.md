@@ -13,6 +13,7 @@ l'interface est rendue en HTML/CSS/JS dans une fenêtre native via
 - **Python 3.9+**
 - **FFmpeg** dans le PATH (requis pour l'audio et la fusion vidéo)
   - Téléchargement : https://ffmpeg.org/download.html
+  - Vous utilisez l'exécutable packagé (.exe) ? Voir [docs/POST_INSTALL.md](docs/POST_INSTALL.md)
 - **WebView2 Runtime** (préinstallé sur Windows 10/11)
 
 ## Installation (développement)
